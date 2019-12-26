@@ -47,7 +47,7 @@ class _TheBodyState extends State<TheBody> {
             child: MaterialButton(
               color: Colors.pink,
               height: 50,
-              child: Text("Show All"), 
+              child: Text("Show All"),
               onPressed: () => theProvider.showAll(),
             ),
           ),
