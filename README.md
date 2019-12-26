@@ -1,6 +1,6 @@
-# flutter_app_win_scratch
+# Possible Errors
 
-A new Flutter application.
+ inheritFromWidgetOfExactType(_Provider<ProductProvider>) or inheritFromElement() was called before
 
 ## Getting Started
 
