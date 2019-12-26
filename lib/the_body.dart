@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_win_scratch/game_data.dart';
@@ -35,25 +34,15 @@ class _TheBodyState extends State<TheBody> {
         children: <Widget>[
           Expanded(
             child: Container(
-              child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 5,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                  ),
-                  itemCount: theProvider.imageList.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: InkWell(
-                        child: Image(
-                          image: theProvider.imageList[index],
-                        ),
-                        onTap: () => theProvider.checkImage(index),
-                      ),
-                    );
-                  }),
+              child: theProvider.isGameWon
+                  ? youWinBanner()
+                  : buildGridView(theProvider),
             ),
           ),
+          Center(
+              child: theProvider.userRights > 0
+                  ? Text("Rights Remain: ${theProvider.userRights.toString()}")
+                  : Text("You LOSE!!")),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: MaterialButton(
@@ -77,6 +66,32 @@ class _TheBodyState extends State<TheBody> {
           )
         ],
       ),
+    );
+  }
+
+  GridView buildGridView(GameData theProvider) {
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 5,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
+        itemCount: theProvider.imageList.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: InkWell(
+              child: Image(
+                image: theProvider.imageList[index],
+              ),
+              onTap: () => theProvider.checkImage(index),
+            ),
+          );
+        });
+  }
+
+  Container youWinBanner() {
+    return Container(
+      child: Center(child: Text("You Win!")),
     );
   }
 }

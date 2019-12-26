@@ -7,6 +7,12 @@ class GameData extends ChangeNotifier {
   AssetImage rupeeImage = AssetImage("images/rupee.png");
   AssetImage sadFaceImage = AssetImage("images/sadFace.png");
   int _luckyNum;
+  int _userRight = 5;
+  bool _isGameWon = false;
+
+  get luckyNum => _luckyNum;
+  get isGameWon => _isGameWon;
+  get userRights => _userRight;
 
   List<AssetImage> imageList =
       List.generate(25, (index) => AssetImage("images/circle.png"));
@@ -15,18 +21,21 @@ class GameData extends ChangeNotifier {
     _luckyNum = Random().nextInt(imageList.length);
   }
 
-  get luckyNum => _luckyNum;
-
   checkImage(int index) {
-    if (index == luckyNum)
+    if (userRights == 0) return;
+    if (index == luckyNum) {
       imageList[index] = AssetImage("images/rupee.png");
-    else
+      _isGameWon = true;
+    } else {
       imageList[index] = AssetImage("images/sadFace.png");
-
+      _userRight--;
+    }
     notifyListeners();
   }
 
   resetGame() {
+    _isGameWon = false;
+    _userRight = 5;
     imageList = List.generate(25, (index) => AssetImage("images/circle.png"));
     setLuckyNumber();
     notifyListeners();
